@@ -1,0 +1,40 @@
+﻿
+@{
+
+    <h1>Bank Branches</h1>
+    <style>
+        th {
+            color: cornflowerblue;
+        }
+
+        h1, a {
+            color: black;
+        }
+    </style>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Location Name</th>
+                <th>Branch Manager</th>
+                <th>Employee Count</th>
+                <th>Location URL</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var branch in Model)
+            {
+                <tr>
+                    <td>@branch.LocationName</td>
+                    <td>@branch.BranchManager</td>
+                    <td>@branch.EmployeeCount</td>
+                    <td><a href="@branch.LocationURL">@branch.LocationURL</a></td>
+                    <td>
+                        <a class="btn btn-success" style="background-color: cornflowerblue" asp-action="Details" asp-route-id="@branch.Id">Branch Info</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <a class="btn btn-success" style="background-color:cornflowerblue" asp-controller="Bank" asp-action="Create">Add New Branch</a>
+
+    </table>
+}
