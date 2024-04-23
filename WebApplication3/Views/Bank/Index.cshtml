@@ -31,6 +31,9 @@
                     <td>
                         <a class="btn btn-success" style="background-color: cornflowerblue" asp-action="Details" asp-route-id="@branch.Id">Branch Info</a>
                     </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@branch.Id">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>

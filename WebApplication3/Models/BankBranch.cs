@@ -8,6 +8,7 @@
         public int EmployeeCount { get; set; }
         public string LocationURL { get; set; }
 
+        public List<Employee> Employees { get; set; } = new();
 
     }
 

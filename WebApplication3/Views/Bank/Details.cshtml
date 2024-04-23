@@ -1,6 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿
 @{
     @model BankBranch
     <style>
@@ -22,6 +20,20 @@
         <p>@Html.DisplayFor(model => model.EmployeeCount)</p>
         <h6>Location URL:</h6>
         <a href="@Html.DisplayFor(model => model.LocationURL)">@Html.DisplayFor(model => model.LocationURL)</a>
-
+        <p> <a asp-action="AddEmployee" asp-route-id="@Model.Id" class="btn btn-primary">Add Employee</a></p>
     </div>
+    <h3>Employees:</h3>
+    @if (Model.Employees != null && Model.Employees.Any())
+    {
+        <ul>
+        @foreach (var employee in Model.Employees)
+            {
+                <li>@employee.Name - @employee.Position</li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No Employees Found</p>
+    }
 }

@@ -1,0 +1,19 @@
+﻿<h1>Add New Employee </h1>
+
+@model AddEmployeeForm
+
+@using (Html.BeginForm("AddEmployee", "Bank", FormMethod.Post))
+{
+    <label>Name</label>
+    <input type="text" asp-for="Name" />
+
+    <label>Civil ID</label>
+    <input type="number" asp-for="CivilId" />
+
+    <label>Position</label>
+    <input type="text" asp-for="Position" />
+
+    //@Html.EditorForModel()
+
+    <button type="submit" class="btn btn-primary">Add</button>
+}
