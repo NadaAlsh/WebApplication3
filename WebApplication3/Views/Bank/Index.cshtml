@@ -1,43 +1,84 @@
 ﻿
-@{
-
-    <h1>Bank Branches</h1>
-    <style>
-        th {
-            color: cornflowerblue;
-        }
-
-        h1, a {
-            color: black;
-        }
-    </style>
-    <table class="table">
-        <thead>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Location Name</th>
+            <th>Branch Manager</th>
+            <th>Employee Count</th>
+            <th>Location URL</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var branch in Model.BranchList)
+        {
             <tr>
-                <th>Location Name</th>
-                <th>Branch Manager</th>
-                <th>Employee Count</th>
-                <th>Location URL</th>
+                <td>@branch.LocationName</td>
+                <td>@branch.BranchManager</td>
+                <td>@branch.EmployeeCount</td>
+                <td><a href="@branch.LocationURL">@branch.LocationURL</a></td>
+                <td>
+                    <a class="btn btn-success" style="background-color: cornflowerblue" asp-action="Details" asp-route-id="@branch.Id">Branch Info</a>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@branch.Id">Edit</a>
+                </td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var branch in Model)
-            {
-                <tr>
-                    <td>@branch.LocationName</td>
-                    <td>@branch.BranchManager</td>
-                    <td>@branch.EmployeeCount</td>
-                    <td><a href="@branch.LocationURL">@branch.LocationURL</a></td>
-                    <td>
-                        <a class="btn btn-success" style="background-color: cornflowerblue" asp-action="Details" asp-route-id="@branch.Id">Branch Info</a>
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@branch.Id">Edit</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-        <a class="btn btn-success" style="background-color:cornflowerblue" asp-controller="Bank" asp-action="Create">Add New Branch</a>
+        }
+    </tbody>
+    <a class="btn btn-success" style="background-color:cornflowerblue" asp-controller="Bank" asp-action="Create">Add New Branch</a>
+</table>
 
-    </table>
-}
+@model BankDashboard
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Branches</h5>
+                <p class="card-text">@Model.TotalBranches</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Total Employees</h5>
+                <p class="card-text">@Model.TotalEmployees</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-3">
+        <canvas id="employeeChart"></canvas>
+    </div>
+</div>
+
+<html>
+<head>
+    <script src="https://unpkg.com/d3@5.12.0/dist/d3.min.js"></script>
+    <link href="https://unpkg.com/c3@0.7.11/c3.min.css" rel="stylesheet">
+    <script src="https://unpkg.com/c3@0.7.11/c3.min.js"></script>
+</head>
+<body>
+    <div id="chart"></div>
+    <script>
+        var chart = c3.generate({
+            bindto: '#chart',
+            data: {
+                columns: [
+                    ['Branches', @Model.TotalBranches],
+                    ['Employees', @Model.TotalEmployees]
+                ],
+                type: 'bar',
+
+                size: {
+                    height: 10,
+                    width: 8
+                }
+            }
+        });
+    </script>
+</body>
+</html>

@@ -8,20 +8,34 @@ namespace WebApplication3.Controllers
 {
     public class BankController : Controller
     {
-        public BankController()
+        private readonly BankContext _context;
+
+        public BankController(BankContext context)
         {
+            _context = context;
         }
+        //public BankController()
+        //{
+        //}
+
 
         public IActionResult Index()
         {
-            BankContext bankContext = new BankContext();
-            var context = bankContext.BankBranches.ToList();
-            return View(context);
-            //return View(BranchData.Branches);
+            BankContext bankContext = _context;
+            var viewModel = new BankDashboard();
+            viewModel.TotalBranches = bankContext.BankBranches.Count();
+            viewModel.TotalEmployees = bankContext.Employees.Count();
+            viewModel.BranchWithMostEmployees = bankContext.BankBranches
+                .OrderByDescending(b => b.Employees.Count)
+                .FirstOrDefault();
+            viewModel.BranchList = bankContext.BankBranches
+                .Include(b => b.Employees)
+                .ToList();
+            return View(viewModel);
         }
         public IActionResult Details(int id)
         {
-            BankContext bankContext = new BankContext();
+            BankContext bankContext = _context;
             var branches = bankContext.BankBranches.Include(r=> r.Employees).First(x => x.Id == id);
 
 
@@ -41,7 +55,7 @@ namespace WebApplication3.Controllers
         {
             if (ModelState.IsValid)
             {
-                BankContext bankContext = new BankContext();
+                BankContext bankContext = _context;
 
                 var branch = new BankBranch
                 {
@@ -66,7 +80,7 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public IActionResult Edit(int id)
         {
-            BankContext bankContext = new BankContext();
+            BankContext bankContext = _context;
 
             var branch = bankContext.BankBranches.Find(id);
 
@@ -80,7 +94,7 @@ namespace WebApplication3.Controllers
         [HttpPost]
         public IActionResult Edit(int id, BankBranch branch)
         {
-            BankContext bankContext = new BankContext();
+            BankContext bankContext = _context;
 
             if (id != branch.Id)
             {
@@ -111,7 +125,7 @@ namespace WebApplication3.Controllers
         }
             private bool BankBranchExists(int id)
             {
-            BankContext bankContext = new BankContext();
+            BankContext bankContext = _context;
 
             return bankContext.BankBranches.Any(e => e.Id == id);
             }
@@ -127,7 +141,7 @@ namespace WebApplication3.Controllers
         {
             if (ModelState.IsValid)
             {
-                var database = new BankContext();
+                var database = _context;
                 var bankbranch = database.BankBranches.Find(id);
                 var addEmployee = new Employee();
 

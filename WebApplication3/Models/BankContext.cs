@@ -5,6 +5,10 @@ namespace WebApplication3.Models
 {
     public class BankContext : DbContext
     {
+        public BankContext(DbContextOptions<BankContext> options) : base(options)
+        {
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BankBranch>().HasData(
@@ -21,11 +25,11 @@ namespace WebApplication3.Models
 
         public DbSet<BankBranch> BankBranches { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
 
-            optionsBuilder.UseSqlite("Data Source=blog.db");
+        //    optionsBuilder.UseSqlite("Data Source=blog.db");
 
-        }
+        //}
     }
 }
