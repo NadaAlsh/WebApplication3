@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using WebApplication3.Models;
@@ -165,8 +166,20 @@ namespace WebApplication3.Controllers
                     return View(employee);
 
             }
-            //ViewBag.Id = id;
-        }
+        //ViewBag.Id = id;
+
+
+        //public IActionResult ChangeLanguage(string language)
+        //{
+        //    Response.Cookies.Append(
+        //    CookieRequestCultureProvider.DefaultCookieName,
+        //    CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(language)),
+        //    new CookieOptions
+        //    {
+        //        Expires = DateTimeOffset.UtcNow.AddYears(1)
+        //    });
+        //}
+    }
         
         }
     

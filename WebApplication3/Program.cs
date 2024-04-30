@@ -9,7 +9,20 @@ builder.Services.AddDbContext<BankContext>(options =>
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllersWithViews()
+    .AddViewLocalization()
+    .AddDataAnnotationsLocalization();
+
+var supportedCultures = new[] { "en", "ar" };
+var requestLocalizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture("ar")
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
 var app = builder.Build();
+app.UseRequestLocalization(requestLocalizationOptions);
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
